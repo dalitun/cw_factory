@@ -91,9 +91,5 @@ system_info:
     templates_dir: /etc/cloud/templates
   ssh_svcname: sshd
 
-runcmd:
-  - mv /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth0.bak
-  - sed '/HWADDR=*/d' /etc/sysconfig/network-scripts/ifcfg-eth0.bak >> ifcfg-eth0.new
-  - mv ifcfg-eth0.new /etc/sysconfig/network-scripts/ifcfg-eth0
-  - rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0.bak
+
 # vim:syntax=yaml
