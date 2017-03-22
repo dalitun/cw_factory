@@ -19,6 +19,7 @@ if [ "${TMP}" ==  "centos" ] || [ "${TMP}" == "fedora" ]
        sudo rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0.bak
        sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0
        sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
+       sudo chattr +i /etc/sysconfig/network-scripts/ifcfg-eth0
     fi
 
     if [ "$(echo ${VER})" == "6" ]
