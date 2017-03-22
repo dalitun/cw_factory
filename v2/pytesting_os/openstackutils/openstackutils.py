@@ -68,7 +68,7 @@ class OpenStackUtils():
     def wait_for_cloud_init(self,server):
         while True:
             console_log = self.get_console_log(server)
-            if re.search('^.*Cloud-init .* finished.*$', console_log, flags=re.MULTILINE):
+            if re.search('login:', console_log, flags=re.MULTILINE):
                 print "Cloudinit finished"
                 break
             else:
