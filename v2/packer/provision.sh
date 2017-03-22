@@ -12,12 +12,13 @@ if [ "${TMP}" ==  "centos" ] || [ "${TMP}" == "fedora" ]
        sudo yum install -y haveged parted curl unzip wget
       else
        sudo dnf install -y haveged parted curl unzip wget
-#       sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0
-#       sudo mv /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth0.bak
-#       sudo sed '/HWADDR=*/d' /etc/sysconfig/network-scripts/ifcfg-eth0.bak >> ifcfg-eth0.new
-#       sudo mv ifcfg-eth0.new /etc/sysconfig/network-scripts/ifcfg-eth0
-#       sudo rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0.bak
-#       sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0
+       sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0
+       sudo mv /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth0.bak
+       sudo sed '/HWADDR=*/d' /etc/sysconfig/network-scripts/ifcfg-eth0.bak >> ifcfg-eth0.new
+       sudo mv ifcfg-eth0.new /etc/sysconfig/network-scripts/ifcfg-eth0
+       sudo rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0.bak
+       sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0
+       sudo rm -rf /etc/udev/rules.d/70-persistent-net.rules
     fi
 
     if [ "$(echo ${VER})" == "6" ]
@@ -39,20 +40,6 @@ else
     sudo apt-get install -y haveged curl bzip2 unzip
 
 fi
-
-if [ -f /etc/redhat-release ] ; then
-    # Remove hardware specific settings from eth0
-    sed -i -e 's/^\(HWADDR\|UUID\|IPV6INIT\|NM_CONTROLLED\|MTU\).*//;/^$/d' \
-        /etc/sysconfig/network-scripts/ifcfg-eth0
-    # Remove udev persistent-net.rules
-    rm -rf /etc/udev/rules.d/70-persistent-net.rules
-    # Remove all kernels except the current version
-    rpm -qa | grep ^kernel-[0-9].* | sort | grep -v $(uname -r) | \
-        xargs -r yum -y remove
-    yum -y clean all
-fi
-
-
 
 ### Clean
 
