@@ -110,7 +110,7 @@ class OpenStackUtils():
         retries_left = 5
         while True:
              try:
-                ssh_connection.connect(floating_ip.ip,username='cloud',key_filename=private_key_filename,timeout=300)
+                ssh_connection.connect(floating_ip.ip,username='cloud',key_filename=private_key_filename,timeout=500)
                 break
              except socket_error as e:
                     if e.errno != errno.ECONNREFUSED or retries_left <= 1:
