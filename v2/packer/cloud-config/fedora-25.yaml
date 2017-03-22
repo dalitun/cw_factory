@@ -95,6 +95,9 @@ system_info:
     templates_dir: /etc/cloud/templates
   ssh_svcname: sshd
 
+network-interfaces: |
+      iface eth0 inet dhcp
+
 #write_files:
 #  - path: /etc/systemd/system/network-cw.service
 #    owner: root:root
