@@ -10,7 +10,7 @@ users:
 
 # If this is set, 'root' will not be able to ssh in and they
 # will get a message to login instead as the above user (fedora).
-disable_root: true
+disable_root: 1
 
 # This will cause the set+update hostname module to not operate (if true)
 preserve_hostname: false
@@ -43,6 +43,7 @@ cloud_init_modules:
  - rsyslog
  - users-groups
  - ssh
+ - resolv-conf
 
 # The modules that run in the 'config' stage
 cloud_config_modules:
@@ -53,6 +54,9 @@ cloud_config_modules:
  - timezone
  - disable-ec2-metadata
  - runcmd
+ - mounts
+ - package-update-upgrade-install
+ - mcollective
 
 # The modules that run in the 'final' stage
 cloud_final_modules:
@@ -90,6 +94,9 @@ system_info:
     cloud_dir: /var/lib/cloud
     templates_dir: /etc/cloud/templates
   ssh_svcname: sshd
+
+runcmd:
+  - echo "NOZEROCONF=yes" >> /etc/sysconfig/network
 
 
 # vim:syntax=yaml
