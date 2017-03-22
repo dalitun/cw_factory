@@ -51,4 +51,3 @@ sudo rm -rf /var/log/*
 sudo rm -rf /home/cloud/bash_history
 sudo rm -rf /var/tmp/*
 sudo rm -rf /tmp/*
-sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0
