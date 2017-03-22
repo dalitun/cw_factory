@@ -1,13 +1,7 @@
-import time
-from basics import test_resources
-import openstackutils
-from basics import test_resources
+from basics import test_resources,cwlib
 
-
-cwlib = openstackutils.OpenStackUtils()
 
 def test_boot_snapshot_in_other_flavor():
-    global test_resources
 
     snapshot_image = cwlib.create_server_snapshot(test_resources['my_server'])
 
@@ -17,10 +11,11 @@ def test_boot_snapshot_in_other_flavor():
 
     new_server = cwlib.boot_vm(image_id=snapshot_image, flavor=17,keypair=test_resources['my_keypair'])
 
-    floating = cwlib.create_floating_ip()
+    floating = cwlib.get_or_create_floating_ip()
+
     cwlib.associate_floating_ip_to_server(floating, new_server)
 
-    ssh_connection = cwlib.initiate_ssh(floating)
+    ssh_connection = cwlib.initiate_ssh(floating,test_resources['my_private_key'])
    
     assert ssh_connection
 
@@ -29,3 +24,4 @@ def test_boot_snapshot_in_other_flavor():
     cwlib.destroy_image(snapshot_image)
 
     cwlib.delete_floating_ip(floating)
+

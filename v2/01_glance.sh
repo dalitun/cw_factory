@@ -1,7 +1,5 @@
 #!/bin/bash -x
 
-#USAGE : sh 01_glance.sh
-
 wget ${IMG_URL}
 
 FILE=$(echo "${IMG_URL##*/}")
@@ -16,3 +14,5 @@ mkdir -p result
 openstack image list | grep ${FILE}-${DATE} | awk {'print $2'} > result/id.txt
 
 ls result/*
+
+rm -rf $FILE

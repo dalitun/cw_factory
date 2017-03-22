@@ -8,12 +8,17 @@ if [ "${TMP}" ==  "centos" ] || [ "${TMP}" == "fedora" ]
   then
     if [ "${TMP}" ==  "centos" ]
       then
-       sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(echo ${VER}).noarch.rpm
+       sudo yum install -y epel-release
        sudo yum install -y haveged parted curl unzip wget
       else
        sudo dnf install -y haveged parted curl unzip wget
+       sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0
+       sudo mv /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth0.bak
+       sudo sed '/HWADDR=*/d' /etc/sysconfig/network-scripts/ifcfg-eth0.bak >> ifcfg-eth0.new
+       sudo mv ifcfg-eth0.new /etc/sysconfig/network-scripts/ifcfg-eth0
+       sudo rm -rf /etc/sysconfig/network-scripts/ifcfg-eth0.bak
+       sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0
     fi
-
 
     if [ "$(echo ${VER})" == "6" ]
       then
@@ -30,10 +35,8 @@ if [ "${TMP}" ==  "centos" ] || [ "${TMP}" == "fedora" ]
 
 
 else
-
     sudo apt-get update
     sudo apt-get install -y haveged curl bzip2 unzip
-
 
 fi
 
@@ -48,3 +51,4 @@ sudo rm -rf /var/log/*
 sudo rm -rf /home/cloud/bash_history
 sudo rm -rf /var/tmp/*
 sudo rm -rf /tmp/*
+sudo cat /etc/sysconfig/network-scripts/ifcfg-eth0

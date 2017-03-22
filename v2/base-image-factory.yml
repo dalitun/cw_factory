@@ -6,7 +6,7 @@ jobs:
   plan:
     - aggregate:
       - get: sources
-        trigger: true
+        trigger: false
       - get: openstack-client
         trigger: true
       - get: python
@@ -29,7 +29,7 @@ jobs:
         OS_USERNAME:    {{OS_USERNAME}}
         OS_PASSWORD:    {{OS_PASSWORD}}
         OS_REGION_NAME: {{OS_REGION_NAME}}
-        IMG_URL: http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+        IMG_URL:        {{OS_URL}}
     - task: Create server then create new image for packer
       image: openstack-client
       config:
@@ -49,8 +49,8 @@ jobs:
         OS_USERNAME:    {{OS_USERNAME}}
         OS_PASSWORD:    {{OS_PASSWORD}}
         OS_REGION_NAME: {{OS_REGION_NAME}}
-        OS_NAME: centos
-        OS_VERSION: 7
+        OS_NAME:        {{OS_NAME}}
+        OS_VERSION:     {{OS_VERSION}}
     - task: Add Cloudwatt propriety in image
       image: openstack-client
       config:
@@ -70,6 +70,9 @@ jobs:
         OS_USERNAME:    {{OS_USERNAME}}
         OS_PASSWORD:    {{OS_PASSWORD}}
         OS_REGION_NAME: {{OS_REGION_NAME}}
+        OS_NAME:        {{OS_NAME}}
+        OS_VERSION:     {{OS_VERSION}}
+        OS_LOGO:        {{OS_LOGO}}
     - task: Image Test
       image: python
       config:
@@ -86,6 +89,7 @@ jobs:
         OS_USERNAME:    {{OS_USERNAME}}
         OS_PASSWORD:    {{OS_PASSWORD}}
         OS_REGION_NAME: {{OS_REGION_NAME}}
+
 resources:
 - name: sources
   type: git
@@ -95,11 +99,11 @@ resources:
 - name: openstack-client
   type: docker-image
   source:
-     repository: dalidocker/openstack-cli
+     repository: cloudwattfr/openstack-client
 - name: python
   type: docker-image
   source:
-     repository: dalidocker/python
+     repository: cloudwattfr/python-factory
 
 
 
