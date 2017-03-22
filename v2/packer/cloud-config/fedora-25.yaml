@@ -55,7 +55,7 @@ cloud_config_modules:
  - disable-ec2-metadata
  - runcmd
  - mounts
- - package-update-upgrade-install
+# - package-update-upgrade-install
  - mcollective
 
 # The modules that run in the 'final' stage
