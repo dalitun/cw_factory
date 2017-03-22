@@ -95,29 +95,29 @@ system_info:
     templates_dir: /etc/cloud/templates
   ssh_svcname: sshd
 
-write_files:
-  - path: /etc/systemd/system/network-cw.service
-    owner: root:root
-    content: |
-      [Unit]
-      Description=Network Reset Daemon
-      Before=network-pre.target
-      Wants=network-pre.target
-
-      [Service]
-      Type=simple
-      User=root
-      Group=root
-      ExecStart=sed -i -e 's/^\(HWADDR\|UUID\|IPV6INIT\|NM_CONTROLLED\|MTU\).*//;/^$/d' /etc/sysconfig/network-scripts/ifcfg-eth0
-
-      [Install]
-      WantedBy=multi-user.target
-
-
-runcmd:
-  - echo "NOZEROCONF=yes" >> /etc/sysconfig/network
-  - systemctl daemon-reload
-  - systemctl enable network-cw.service
+#write_files:
+#  - path: /etc/systemd/system/network-cw.service
+#    owner: root:root
+#    content: |
+#      [Unit]
+#      Description=Network Reset Daemon
+#      Before=network-pre.target
+#      Wants=network-pre.target
+#
+#      [Service]
+#      Type=simple
+#      User=root
+#      Group=root
+#      ExecStart=sed -i -e 's/^\(HWADDR\|UUID\|IPV6INIT\|NM_CONTROLLED\|MTU\).*//;/^$/d' /etc/sysconfig/network-scripts/ifcfg-eth0
+#
+#      [Install]
+#      WantedBy=multi-user.target
+#
+#
+#runcmd:
+#  - echo "NOZEROCONF=yes" >> /etc/sysconfig/network
+#  - systemctl daemon-reload
+#  - systemctl enable network-cw.service
 
 
 # vim:syntax=yaml
