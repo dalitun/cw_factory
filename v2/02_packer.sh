@@ -19,7 +19,7 @@ while true
 DATE=$(date +%Y-%m-%d:%H:%M:%S)
 
 
-if [ ! -z ${OS_NAME} ] && [ ! -z ${OS_VERSION} ]s
+if [ ! -z ${OS_NAME} ] && [ ! -z ${OS_VERSION} ]
   then
   export IMG_TMP_ID=$(cat outputs-glance/id.txt)
   if [ -z $IMG_TMP_ID ]
