@@ -11,6 +11,9 @@ jobs:
         trigger: true
       - get: python
         trigger: true
+      - get: compress
+        trigger: true
+
     - task: Download && Upload Image to Glance
       image: openstack-client
       config:
@@ -121,14 +124,17 @@ resources:
   source:
     uri: https://github.com/flemzord/cw_factory.git
     branch: test
+
 - name: openstack-client
   type: docker-image
   source:
      repository: cloudwattfr/openstack-client
+
 - name: python
   type: docker-image
   source:
      repository: cloudwattfr/python-factory
+
 - name: compress
   type: docker-image
   source:
