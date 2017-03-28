@@ -4,11 +4,11 @@ export REPO_DIR=sources
 
 while true
   do
-   heat stack-list | grep factory3 | cut -d "|" -f4 | grep "CREATE_COMPLETE"
+   heat stack-list | grep factory | cut -d "|" -f4 | grep "CREATE_COMPLETE"
    if  [ $? -eq 0 ]
       then
-        export NET_ID=$(heat output-show factory3 Network_id | sed -e 's/^"//' -e 's/"$//')
-        export SG_ID=$(heat output-show factory3 Security_group | sed -e 's/^"//'  -e 's/"$//')
+        export NET_ID=$(heat output-show factory Network_id | sed -e 's/^"//' -e 's/"$//')
+        export SG_ID=$(heat output-show factory Security_group | sed -e 's/^"//'  -e 's/"$//')
         break
       else
         echo "Wait for factory_network stack will be up"

@@ -17,5 +17,3 @@ mkdir -p result
 echo ${IMG_ID} > result/id.txt
 
 cat result/id.txt
-
-ls result/*

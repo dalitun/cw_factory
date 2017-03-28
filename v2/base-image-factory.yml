@@ -67,7 +67,7 @@ jobs:
             - name: outputs-compress
               path: result/
          run :
-            path: sources/v2/05_compress.sh
+            path: sources/v2/03_compress.sh
       params:
         OS_AUTH_URL:    {{OS_AUTH_URL}}
         OS_TENANT_ID:   {{OS_TENANT_ID}}
@@ -89,7 +89,7 @@ jobs:
             - name: outputs-for-test
               path: result/
          run :
-            path: sources/v2/03_update_img_cw.sh
+            path: sources/v2/04_update_img_cw.sh
       params:
         OS_AUTH_URL:    {{OS_AUTH_URL}}
         OS_TENANT_ID:   {{OS_TENANT_ID}}
@@ -109,7 +109,7 @@ jobs:
             - name : sources
             - name: outputs-for-test
          run :
-            path: sources/v2/04_test_image.sh
+            path: sources/v2/05_test_image.sh
       params:
         OS_AUTH_URL:    {{OS_AUTH_URL}}
         OS_TENANT_ID:   {{OS_TENANT_ID}}
@@ -123,7 +123,7 @@ resources:
   type: git
   source:
     uri: https://github.com/flemzord/cw_factory.git
-    branch: test
+    branch: master
 
 - name: openstack-client
   type: docker-image
