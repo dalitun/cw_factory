@@ -47,24 +47,4 @@ fi
 
 
 mkdir -p result
-
-IMG_RESULT=$(openstack image list | grep ${IMG_NAME} | awk {'print $2'})
-
-glance image-download --file ./current.qcow2 ${IMG_ID}
-
-ionice -c 3 virt-sparsify --compress --tmp  "current.qcow2" "current-c.qcow2"  || exit 1
-
-rm -rf current.qcow2
-
-glance image-create --name ${IMG_NAME}-compress --disk-format qcow2 --container-format bare --file current-c.qcow2
-
-rm -rf current-c.qcow2
-
-openstack image list | grep ${IMG_NAME}-compress | awk {'print $2'} > result/id.txt
-
-
-cat result/id.txt
-
-
-ls result/*
-
+openstack image list | grep ${IMG_NAME} | awk {'print $2'} > result/id.txt

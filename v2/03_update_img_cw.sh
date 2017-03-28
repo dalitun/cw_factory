@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 
-IMG_ID=$(cat outputs-packer/id.txt)
+IMG_ID=$(cat outputs-compress/id.txt)
 
 PURGE=$(openstack image show -f value -c properties ${IMG_ID} | tr ", " "\n" | grep -v "^$" | cut -d"=" -f1 | grep -v -E "(cw_os|cw_origin|hw_rng_model)" | sed 's/^/--remove-property /g' | tr "\n" " ")
 
