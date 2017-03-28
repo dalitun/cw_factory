@@ -7,7 +7,7 @@ IMG_NAME="${OS_NAME}-${OS_VERSION}_${DATE}"
 
 glance image-download --file ./current.qcow2 ${IMG_ID}
 
-virt-sparsify --compress --tmp  "current.qcow2" "current-c.qcow2"  || exit 1
+virt-sparsify -v --compress --tmp  "current.qcow2" "current-c.qcow2"  || exit 1
 
 rm -rf current.qcow2
 
