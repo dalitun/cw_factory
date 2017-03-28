@@ -4,7 +4,7 @@ export REPO_DIR=sources
 
 while true
   do
-   heat stack-list | grep factory | cut -d "|" -f4 | grep "CREATE_COMPLETE"
+   heat stack-list | grep factory3 | cut -d "|" -f4 | grep "CREATE_COMPLETE"
    if  [ $? -eq 0 ]
       then
         export NET_ID=$(heat output-show factory Network_id | sed -e 's/^"//' -e 's/"$//')
@@ -19,7 +19,7 @@ while true
 DATE=$(date +%Y-%m-%d:%H:%M:%S)
 
 
-if [ ! -z ${OS_NAME} ] && [ ! -z ${OS_VERSION} ]
+if [ ! -z ${OS_NAME} ] && [ ! -z ${OS_VERSION} ]s
   then
   export IMG_TMP_ID=$(cat outputs-glance/id.txt)
   if [ -z $IMG_TMP_ID ]

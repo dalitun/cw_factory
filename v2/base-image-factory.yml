@@ -30,6 +30,7 @@ jobs:
         OS_PASSWORD:    {{OS_PASSWORD}}
         OS_REGION_NAME: {{OS_REGION_NAME}}
         IMG_URL:        {{OS_URL}}
+
     - task: Create server then create new image for packer
       image: openstack-client
       config:
@@ -51,6 +52,29 @@ jobs:
         OS_REGION_NAME: {{OS_REGION_NAME}}
         OS_NAME:        {{OS_NAME}}
         OS_VERSION:     {{OS_VERSION}}
+
+    - task: Compress image create by packer
+      image: openstack-client
+      config:
+         platform: linux
+         inputs:
+            - name: outputs-packer
+         outputs:
+            - name: sources
+            - name: outputs-compress
+              path: result/
+         run :
+            path: sources/v2/03_compress_img.sh
+      params:
+        OS_AUTH_URL:    {{OS_AUTH_URL}}
+        OS_TENANT_ID:   {{OS_TENANT_ID}}
+        OS_TENANT_NAME: {{OS_TENANT_NAME}}
+        OS_USERNAME:    {{OS_USERNAME}}
+        OS_PASSWORD:    {{OS_PASSWORD}}
+        OS_REGION_NAME: {{OS_REGION_NAME}}
+        OS_NAME:        {{OS_NAME}}
+        OS_VERSION:     {{OS_VERSION}}
+
     - task: Add Cloudwatt propriety in image
       image: openstack-client
       config:
@@ -62,7 +86,7 @@ jobs:
             - name: outputs-for-test
               path: result/
          run :
-            path: sources/v2/03_update_img_cw.sh
+            path: sources/v2/04_update_img_cw.sh
       params:
         OS_AUTH_URL:    {{OS_AUTH_URL}}
         OS_TENANT_ID:   {{OS_TENANT_ID}}
@@ -73,6 +97,7 @@ jobs:
         OS_NAME:        {{OS_NAME}}
         OS_VERSION:     {{OS_VERSION}}
         OS_LOGO:        {{OS_LOGO}}
+
     - task: Image Test
       image: python
       config:
@@ -81,7 +106,7 @@ jobs:
             - name : sources
             - name: outputs-for-test
          run :
-            path: sources/v2/04_test_image.sh
+            path: sources/v2/05_test_image.sh
       params:
         OS_AUTH_URL:    {{OS_AUTH_URL}}
         OS_TENANT_ID:   {{OS_TENANT_ID}}

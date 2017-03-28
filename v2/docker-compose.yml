@@ -8,10 +8,11 @@ concourse-db:
 
 concourse-web:
   image: concourse/concourse
-  links: [concourse-db]
+  links:
+    - concourse-db
   command: web
-  ports: ["8080:8080"]
-  volumes: ["./keys/web:/concourse-keys"]
+  ports:
+    - "8080:8080"
   environment:
     CONCOURSE_BASIC_AUTH_USERNAME: concourse
     CONCOURSE_BASIC_AUTH_PASSWORD: changeme
@@ -22,8 +23,8 @@ concourse-web:
 concourse-worker:
   image: concourse/concourse
   privileged: true
-  links: [concourse-web]
+  links:
+    - concourse-web
   command: worker
-  volumes: ["./keys/worker:/concourse-keys"]
   environment:
     CONCOURSE_TSA_HOST: concourse-web
