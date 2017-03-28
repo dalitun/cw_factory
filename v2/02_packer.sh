@@ -7,8 +7,8 @@ while true
    heat stack-list | grep factory3 | cut -d "|" -f4 | grep "CREATE_COMPLETE"
    if  [ $? -eq 0 ]
       then
-        export NET_ID=$(heat output-show factory Network_id | sed -e 's/^"//' -e 's/"$//')
-        export SG_ID=$(heat output-show factory Security_group | sed -e 's/^"//'  -e 's/"$//')
+        export NET_ID=$(heat output-show factory3 Network_id | sed -e 's/^"//' -e 's/"$//')
+        export SG_ID=$(heat output-show factory3 Security_group | sed -e 's/^"//'  -e 's/"$//')
         break
       else
         echo "Wait for factory_network stack will be up"
@@ -48,8 +48,19 @@ fi
 
 mkdir -p result
 
+IMG_RESULT=$(openstack image list | grep ${IMG_NAME} | awk {'print $2'})
 
-openstack image list | grep ${IMG_NAME} | awk {'print $2'} > result/id.txt
+glance image-download --file ./current.qcow2 ${IMG_ID}
+
+ionice -c 3 virt-sparsify --compress --tmp  "current.qcow2" "current-c.qcow2"  || exit 1
+
+rm -rf current.qcow2
+
+glance image-create --name ${IMG_NAME}-compress --disk-format qcow2 --container-format bare --file current-c.qcow2
+
+rm -rf current-c.qcow2
+
+openstack image list | grep ${IMG_NAME}-compress | awk {'print $2'} > result/id.txt
 
 
 cat result/id.txt
