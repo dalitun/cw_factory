@@ -44,7 +44,7 @@ fi
 
 if [ "${TMP}" ==  "ubuntu" ]
  then
-    sudo apt install python
+    sudo apt install -y python
 fi
 
 
